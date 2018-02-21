@@ -10,7 +10,7 @@ k8s_cloudstack_network_offering: MCC-VPC-LB
 k8s_cloudstack_vpc: kubernetes
 k8s_cloudstack_vpc_offering: MCC-KVM-VPC-SBP1
 k8s_cloudstack_project: k8s
-k8s_template: CoreOS-1520.8.0
+k8s_template: CoreOS-1520.8.0-k8s
 k8s_template_url: http://195.43.158.181/coreos/1520.8.0/cloudstack/coreos_production_cloudstack_image-kvm.qcow2.bz2
 #k8s_template_url: http://dl.openvm.eu/cloudstack/coreos/x86_64/coreos_production_cloudstack_image-kvm.qcow2.bz2
 k8s_instance_type: MCC_v2.2vCPU.4GB.SBP1
