@@ -16,6 +16,14 @@ write_files:
   owner: root
   content: |
     {{ lookup('file', 'certificates/ca.crt') | indent}}
+- path: /srv/kubernetes/{{k8s_node_prefix}}-node-{{item}}.crt
+  owner: root
+  content: |
+    {{ lookup('file', 'certificates/'+k8s_node_prefix+'-node-' + item + '.crt') | indent}}
+- path: /srv/kubernetes/{{k8s_node_prefix}}-node-{{item}}.key
+  owner: root
+  content: |
+    {{ lookup('file', 'certificates/'+k8s_node_prefix+'-node-' + item + '.key') | indent}}
 - path: /srv/kubernetes/kubeconfig.yaml
   owner: root
   content: |
@@ -205,9 +213,9 @@ coreos:
         --cluster-dns=10.250.0.53 \
         --cluster-domain=cluster.local \
         --cloud-provider=external \
+        --cloud-config=/etc/cloudstack.conf \
         --volume-plugin-dir=/etc/kubernetes/volumeplugins \
         --logtostderr=true \
-        --provider-id=cloudstack \
         --allow-privileged \
         -v=4
         Restart=always

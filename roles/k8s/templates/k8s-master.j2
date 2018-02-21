@@ -27,6 +27,10 @@ write_files:
   owner: root
   content: |
     {{ lookup('file', 'certificates/ca.crt') | indent}}
+- path: /srv/kubernetes/ca.key
+  owner: root
+  content: |
+    {{ lookup('file', 'certificates/ca.key') | indent}}
 - path: /srv/kubernetes/server.key
   owner: root
   content: |
@@ -215,7 +219,7 @@ coreos:
         --root-ca-file=/srv/kubernetes/ca.crt \
         --cluster-cidr={{ k8s_cluster_network | ipsubnet(25,0) }} \
         --flex-volume-plugin-dir=/etc/kubernetes/volumeplugins \
-        --cluster-signing-cert-file=/srv/kubernetes/server.crt --cluster-signing-key-file=/srv/kubernetes/server.key \
+        --cluster-signing-cert-file=/srv/kubernetes/ca.crt --cluster-signing-key-file=/srv/kubernetes/ca.key \
         --logtostderr=true \
         -v=4
         Restart=always

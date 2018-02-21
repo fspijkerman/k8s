@@ -45,7 +45,7 @@
 
         # Dashboard
         openssl genrsa -out certificates/dashboard/dashboard.key 2048
-        openssl req -new -key certificates/dashboard/dashboard.key -subj "/CN={{k8s_external_ip}}" -out certificates/dashboard.csr -config certificates/master-openssl.cnf
+        openssl req -new -key certificates/dashboard/dashboard.key -subj "/CN=system:kube-dashboard" -out certificates/dashboard.csr -config certificates/master-openssl.cnf
         openssl x509 -req -in certificates/dashboard.csr -CA certificates/ca.crt -CAkey certificates/ca.key -CAcreateserial -out certificates/dashboard/dashboard.crt -days 10000 -extensions v3_req -extfile certificates/master-openssl.cnf
         openssl x509  -noout -text -in certificates/dashboard/dashboard.crt
   args:
@@ -56,7 +56,7 @@
 - name: Create worker certificates for the kubernetes deployment
   shell: |
         openssl genrsa -out certificates/{{ k8s_node_prefix }}-node-{{ item }}.key 2048
-        WORKER_FQDN={{ k8s_node_prefix }}-node-{{ item }} openssl req -new -key certificates/{{ k8s_node_prefix }}-node-{{ item }}.key -subj "/CN={{ k8s_node_prefix }}-node-{{ item }}" -out certificates/{{ k8s_node_prefix }}-node-{{ item }}.csr -config certificates/worker-openssl.cnf
+        WORKER_FQDN={{ k8s_node_prefix }}-node-{{ item }} openssl req -new -key certificates/{{ k8s_node_prefix }}-node-{{ item }}.key -subj "/CN=system:node:{{ k8s_node_prefix }}-node-{{ item }}/O=system:nodes" -out certificates/{{ k8s_node_prefix }}-node-{{ item }}.csr -config certificates/worker-openssl.cnf
         WORKER_FQDN={{ k8s_node_prefix }}-node-{{ item }} openssl x509 -req -in certificates/{{ k8s_node_prefix }}-node-{{ item }}.csr -CA certificates/ca.crt -CAkey certificates/ca.key -CAcreateserial -out certificates/{{ k8s_node_prefix }}-node-{{ item }}.crt -days 10000 -extensions v3_req -extfile certificates/worker-openssl.cnf
         openssl x509  -noout -text -in certificates/{{ k8s_node_prefix }}-node-{{ item }}.crt
   args:
