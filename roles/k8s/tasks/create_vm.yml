@@ -25,6 +25,7 @@
       ssh_key: "{{ ssh_key }}"
       user_data: "{{ lookup('template', '../templates/k8s-node.j2') }}"
       disk_offering: "{{ k8s_node_disktype }}"
+      disk_size: "40"
       ip_address: "{{ k8s_cluster_network | ipsubnet(25,0) | ipaddr(2) | ipaddr('address') }}{{item}}" # need to find a cleaner way
       project: "{{ k8s_cloudstack_project }}"
     with_sequence: count={{ k8s_num_nodes }}

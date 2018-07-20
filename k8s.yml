@@ -3,13 +3,14 @@
   connection: local
   vars:
     ssh_key: k8s
-    k8s_version: v1.8.6
+    #k8s_version: v1.8.6
+    k8s_version: v1.10.2
     k8s_num_nodes: 2
     k8s_security_group_name: k8s
     k8s_node_prefix: k8s
     k8s_cluster_network: 172.16.10.0
-    #k8s_download_prefix: https://dl.k8s.io
-    k8s_download_prefix: http://195.43.158.181/k8s
+    k8s_download_prefix: https://dl.k8s.io
+    #k8s_download_prefix: http://195.43.158.181/k8s
     k8s_cloudstack_project: k8s
     cs_api_url: "{{ cs_api_url }}"
     cs_api_key: "{{ cs_api_key }}"
